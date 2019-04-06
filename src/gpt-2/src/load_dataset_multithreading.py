@@ -3,8 +3,25 @@ import numpy as np
 import os
 import random
 import tensorflow as tf
-import tqdm
+from multiprocessing.dummy import Pool as ThreadPool
 
+def _get_file(files):
+    raw_text = ''
+    token_chunks = []
+    path = files[0]
+ 
+
+    # Plain text
+    with open(path, 'r') as fp:
+        raw_text += fp.read()
+    if len(raw_text) >= files[1]:
+        tokens = np.stack(files[2].encode(raw_text))
+        print(tokens)
+        token_chunks.append(tokens)
+        raw_text = ''
+    else:
+        raw_text += '<|endoftext|>'
+    return raw_text, token_chunks
 
 def load_dataset(enc, path, combine):
     paths = []
@@ -20,18 +37,25 @@ def load_dataset(enc, path, combine):
         # Assume glob
         paths = glob.glob(path)
 
-    token_chunks = []
     raw_text = ''
-    for path in tqdm.tqdm(paths):
-    # Plain text
-        with open(path, 'r') as fp:
-            raw_text += fp.read()
-        if len(raw_text) >= combine:
-            tokens = np.stack(enc.encode(raw_text))
-            token_chunks.append(tokens)
-            raw_text = ''
-        else:
-            raw_text += '<|endoftext|>'
+    token_chunks = []
+    files = [(f,combine,enc) for f in paths]
+    with ThreadPool(14) as pool:
+        print("crea threads, voy a hacer cosas paralelas")
+        result = list(pool.imap(_get_file,files,1))
+  
+
+
+    llista_raw_text = [result[i][0] for i in range(0,len(result))]
+    llista_raw_text = [item for sublist in llista_raw_text for item in sublist ]
+    raw_text.join = llista_raw_text[0]
+    print(raw_text)
+
+    token_chunks = [result[i][1] for i in range(0,len(result))]
+    token_chunks = [item for sublist in token_chunks for item in sublist]
+    print(token_chunks)
+    
+
     if raw_text:
         tokens = np.stack(enc.encode(raw_text))
         token_chunks.append(tokens)
