@@ -26,7 +26,7 @@ body{
     padding: 5em;
     outline: none;
     margin-top:1em;
-    visibility: hidden;
+    visibility: visible;
     height: 100%;
     width: 100%;
     font-size: 1em;
