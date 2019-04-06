@@ -1,6 +1,14 @@
 PARAGRAPH_LENGTH = 200
 
+INDEX_FILE_NAME = 'index.nmslib'
+CSV_FILE_NAME = 'articles.csv'
+
+NEIGHBOURHOOD_AMOUNT = 5
+
 
 __all__ = [
-    'PARAGRAPH_LENGTH'
+    'PARAGRAPH_LENGTH',
+    'INDEX_FILE_NAME',
+    'CSV_FILE_NAME',
+    'NEIGHBOURHOOD_AMOUNT'
 ]
