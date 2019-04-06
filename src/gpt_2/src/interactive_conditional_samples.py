@@ -20,8 +20,8 @@ def interact_model(
     nsamples=1,
     batch_size=1,
     length=None,
-    temperature=0.86,
-    top_k=40,
+    temperature=0.85,
+    top_k=100,
 ):
     #TODO: borrar aquesta descripcció
     """
