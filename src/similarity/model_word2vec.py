@@ -1,8 +1,9 @@
 import tqdm
 import argparse
 import multiprocessing
-
 import gensim.models.word2vec as w2v
+
+from multiprocessing.dummy import Pool as ThreadPool
 
 from src import *
 from src.util import log
@@ -30,22 +31,24 @@ def _config_w2v():
 
 
 def _generate_word2vec_model():
+    log.info('Loading CSV...')
     docs = word_util.load_csv(args.csv_file)
     paragraphs = [d[1] for d in docs]
 
     log.info('articles.csv loaded - Starting to clean paragraphs...')
-    text_corpus = []
-    for paragraph in tqdm.tqdm(paragraphs):
-        text_corpus.append(word_util.clean_paragraph(paragraph))
+    with ThreadPool(12) as pool:
+        text_corpus = list(tqdm.tqdm(pool.imap(word_util.clean_paragraph, paragraphs, 1), total=len(paragraphs)))
     log.info('Done! Now calling w2v library to configure the model.')
     articles2vec = _config_w2v()
     
     log.info('That seems very good :) Now the magic, I am going to start introducing the vocabulary...')
     articles2vec.build_vocab(text_corpus)
     log.info('Awesome. Finally... I am going to train the model. It will take a while hehe')
-    unique_words = len(articles2vec.wv.vocab)
-    log.info('Number of unique words: {}'.format(unique_words))
-    articles2vec.train(text_corpus, total_words=unique_words, epochs=1)
+    sentences_count = articles2vec.corpus_count
+    epochs_count = articles2vec.epochs
+    log.info('Number of unique sentences: {}'.format(sentences_count))
+    log.info('Number of unique epochs: {}'.format(epochs_count))
+    articles2vec.train(text_corpus, total_examples=sentences_count, epochs=epochs_count)
     log.info('READY TO SAVE!')
 
     return articles2vec
