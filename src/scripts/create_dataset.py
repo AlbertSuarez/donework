@@ -37,8 +37,10 @@ def generate_dataset():
     with open(args.output_file, 'w') as file:
         for article in tqdm(result_articles, total=len(result_articles)):
             for paragraph in article:
-                file.write('"{}","{}"\n'.format(paragraph_id, paragraph))
+                file.write('{}\n'.format(paragraph))
                 paragraph_id += 1
+                if paragraph_id >= DATASET_LIMIT:
+                    return
 
 
 if __name__ == '__main__':
