@@ -5,3 +5,4 @@ tqdm
 sklearn
 gensim
 numpy
+TextBlob
