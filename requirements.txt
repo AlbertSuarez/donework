@@ -5,3 +5,5 @@ tqdm
 sklearn
 gensim
 numpy
+cython
+word2vec
