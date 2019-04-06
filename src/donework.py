@@ -32,7 +32,7 @@ def image():
     r = requests.get(url = GOOGLE_API_URL, params = PARAMS) 
     # extracting data in json format 
     data = r.json() 
-    return jsonify(data['items'][0]['link'])
+    return jsonify([data['items'][0]['link'], imageName])
 
 
 @flask_app.route('/generate')

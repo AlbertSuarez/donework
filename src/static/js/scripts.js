@@ -10,8 +10,8 @@ function run() {
 }
 
 function generateText() {
-  textInput = document.getElementById('textInput');
-  text = textInput.value;
+  var textInput = document.getElementById('textInput');
+  var text = textInput.value;
   // Set up our HTTP request
   var xhr = new XMLHttpRequest();
 
@@ -21,7 +21,10 @@ function generateText() {
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
       console.log('Text generated!');
-      textInput.value = text + xhr.responseText;
+      var generatedText = xhr.responseText;
+      generatedText = generatedText.substring(2);
+      generatedText = generatedText.substring(0,generatedText.length-3);
+      textInput.value = text + generatedText;
       run();
     } else {
       // What do when the request fails
@@ -49,8 +52,10 @@ function generateImage() {
     // Process our return data
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
+      var imageUrl = xhr.responseText[0];
+      imageUrl = imageUrl.substring(1,imageUrl.length-2)
       console.log('Image generated!', xhr.responseText);
-      textInput.value = text + '\n\n' + xhr.responseText;
+      textInput.value = text + '\n\n' + '<img src="' + imageUrl + '" width=300px title="' + xhr.responseText[1] +'>';
       run();
     } else {
       // What do when the request fails
