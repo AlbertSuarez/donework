@@ -1,7 +1,8 @@
 PARAGRAPH_LENGTH = 200
 
-INDEX_FILE_NAME = 'index.nmslib'
-CSV_FILE_NAME = 'articles.csv'
+INDEX_FILE_NAME = 'index_short.nmslib'
+CSV_FILE_NAME = 'articles_short.csv'
+W2V_FILE_NAME = 'articles2vector_short.w2v'
 
 NEIGHBOURHOOD_AMOUNT = 5
 NUM_FEATURES = 50
@@ -14,6 +15,7 @@ __all__ = [
     'PARAGRAPH_LENGTH',
     'INDEX_FILE_NAME',
     'CSV_FILE_NAME',
+    'W2V_FILE_NAME',
     'NEIGHBOURHOOD_AMOUNT',
     'NUM_FEATURES',
     'MIN_WORD_COUNT',
