@@ -1,61 +1,50 @@
+import os
 import argparse
-import sklearn
-import numpy as np
-import gensim.models.word2vec as w2v
 
 from tqdm import tqdm
 from multiprocessing.dummy import Pool as ThreadPool
 
+from src import *
 from src.util import log
-from src.similarity.nmslib_util import Nmslib
-from src.similarity.word_util import clean_paragraph, load_csv
+from src.similarity.util import helper
+from src.similarity.util.nmslib import Nmslib
 
 
 def _parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('csv_file', type=str)
-    parser.add_argument('w2v_file', type=str)
-    parser.add_argument('index_file', type=str)
+    parser.add_argument('output_path', type=str)
     return parser.parse_args()
-
-
-def _load_features():
-    return w2v.Word2Vec.load(args.w2v_file)
-
-
-def _normalize(paragraph):
-    vector_sum = 0
-    paragraph = clean_paragraph(paragraph)
-    words = paragraph.split()
-    for word in words:
-        vector_sum = vector_sum + paragraphs2vec[word]
-    vector_sum = vector_sum.reshape(1, -1)
-    normalised_vector_sum = sklearn.preprocessing.normalize(vector_sum)
-    return normalised_vector_sum
 
 
 def _build():
     log.info('Loading CSV...')
-    rows = load_csv(args.csv_file)
+    csv_path = os.path.join(args.output_path, CSV_FILE_NAME)
+    rows = helper.load_csv(csv_path)
     log.info('CSV loaded. Paragraphs: {}'.format(len(rows)))
+
+    log.info('Loading features...')
+    w2v_path = os.path.join(args.output_path, W2V_FILE_NAME)
+    paragraphs2vec = helper.load_w2v(w2v_path)
+    log.info('Features loaded')
 
     log.info('Normalizing...')
     with ThreadPool(20) as pool:
-        paragraphs_vector = list(tqdm(pool.imap(_normalize, rows, 1), total=len(rows)))
+        rows = [(row, paragraphs2vec) for row in rows]
+        paragraphs_vector = list(tqdm(pool.imap(helper.normalize, rows, 1), total=len(rows)))
     log.info('Normalized. Vectors: {}'.format(len(paragraphs_vector)))
 
     log.info('Reshaping...')
-    x = np.array(paragraphs_vector).reshape((47, 50))
+    x = helper.re_shape(paragraphs_vector)
     log.info('Reshaped. Shape: {}'.format(x.shape))
 
     log.info('Building index...')
+    index_path = os.path.join(args.output_path, INDEX_FILE_NAME)
     index = Nmslib()
     index.fit(x)
-    index.save(args.index_file)
+    index.save(index_path)
     log.info('Index built')
 
 
 if __name__ == '__main__':
     args = _parse_args()
-    paragraphs2vec = _load_features()
     _build()
