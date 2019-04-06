@@ -22,7 +22,6 @@ function generateText() {
       // What do when the request is successful
       console.log('Text generated!');
       textInput.value = text + xhr.responseText;
-      generateImage();
       run();
     } else {
       // What do when the request fails
@@ -39,6 +38,7 @@ function generateText() {
 
 
 function generateImage() {
+  console.log("hola");
   textInput = document.getElementById('textInput');
   text = textInput.value;
   // Set up our HTTP request
@@ -49,7 +49,7 @@ function generateImage() {
     // Process our return data
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
-      console.log('Text generated!', xhr.responseText);
+      console.log('Image generated!', xhr.responseText);
       textInput.value = text + '\n\n' + xhr.responseText;
       run();
     } else {
