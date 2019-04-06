@@ -1,7 +1,7 @@
+import os
 import csv
 import string
-import numpy as np
-import gensim.models.word2vec as w2v
+
 
 translator = str.maketrans('', '', string.punctuation)
 
