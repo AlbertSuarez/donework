@@ -1,8 +1,8 @@
 PARAGRAPH_LENGTH = 200
 
-INDEX_FILE_NAME = 'index_short.nmslib'
-CSV_FILE_NAME = 'articles_short.csv'
-W2V_FILE_NAME = 'articles2vector_short.w2v'
+INDEX_FILE_NAME = 'index.nmslib'
+CSV_FILE_NAME = 'articles.csv'
+W2V_FILE_NAME = 'articles2vector.w2v'
 
 NEIGHBOURHOOD_AMOUNT = 5
 NUM_FEATURES = 50
