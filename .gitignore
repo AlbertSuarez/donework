@@ -113,11 +113,11 @@ venv3/
 
 
 # GPT-2
-src/gpt-2/__pycache__
-src/gpt-2/models/
-src/gpt-2/checkpoint
-src/gpt-2/samples
-src/gpt-2/gpt-2-samples/
-src/gpt-2/trainingData/
-src/gpt-2/LICENSE
+src/gpt_2/__pycache__
+src/gpt_2/models/
+src/gpt_2/checkpoint
+src/gpt_2/samples
+src/gpt_2/gpt-2-samples/
+src/gpt_2/trainingData/
+src/gpt_2/LICENSE
 

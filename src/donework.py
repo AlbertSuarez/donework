@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
-import requests 
+import requests
+from  src.gpt_2.src.interactive_conditional_samples import generateSample
 
 GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
 GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
@@ -30,5 +31,12 @@ def image():
     # extracting data in json format 
     data = r.json() 
     return jsonify(data['items'][0]['link'])
+
+
+@flask_app.route('/generate')
+def generate():
+    inputText = request.args.get('inputText')
+    generatedText = generateSample(inputText)
+    return jsonify(generatedText)
 
 

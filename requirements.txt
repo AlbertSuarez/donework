@@ -6,3 +6,6 @@ sklearn
 gensim
 numpy
 TextBlob
+Fire
+tensorflow
+regex

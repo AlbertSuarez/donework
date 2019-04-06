@@ -6,18 +6,13 @@ import os
 import numpy as np
 import tensorflow as tf
 import argparse
-import model, sample, encoder
+import src.gpt_2.src.model as model
+import src.gpt_2.src.sample as sample
+import src.gpt_2.src.encoder as encoder
 
 
-
-
-parser = argparse.ArgumentParser(
-    description='Input text for the context.',
-    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-parser.add_argument('--input', metavar='PATH', type=str, required=True, help='Input text, utf-8 encoding.')
-
-generatedText =""
+generatedText = ""
+inputText = ""
 
 def interact_model(
     model_name='117M',
@@ -47,8 +42,10 @@ def interact_model(
      while 40 means 40 words are considered at each step. 0 (default) is a
      special setting meaning no restrictions. 40 generally is a good value.
     """
-    args = parser.parse_args()
+    # args = parser.parse_args()
   
+    global generatedText
+    global inputText
 
     if batch_size is None:
         batch_size = 1
@@ -56,7 +53,7 @@ def interact_model(
 
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
-    with open(os.path.join('models', model_name, 'hparams.json')) as f:
+    with open(os.path.join('src/gpt_2/models', model_name, 'hparams.json')) as f:
         hparams.override_from_dict(json.load(f))
 
     if length is None:
@@ -77,13 +74,12 @@ def interact_model(
         )
 
         saver = tf.train.Saver()
-        ckpt = tf.train.latest_checkpoint(os.path.join('models', model_name))
+        ckpt = tf.train.latest_checkpoint(os.path.join('src/gpt_2/models', model_name))
         saver.restore(sess, ckpt)
 
         #TODO: afegir un botó per a executar lo de sota 
         #TODO: si va molt mal intentar buscar el numero de paraules en el text generat envers al paragraf donat
-        textInput = args.input
-        raw_text = textInput
+        raw_text = inputText
         context_tokens = enc.encode(raw_text)
         generated = 0
         for _ in range(nsamples // batch_size):
@@ -96,7 +92,6 @@ def interact_model(
                 print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
                 print("------------------------------"*30)
                 text = text.split("<|endoftext|>",1)[0]
-                global generatedText
                 generatedText += text
                 #TODO tornar la merda que fa
                 print(text)
@@ -108,7 +103,10 @@ def interact_model(
 if __name__ == '__main__':
     fire.Fire(interact_model)
 
-def generateSample():
+def generateSample(input_text):
+    global generatedText
+    global inputText
+    inputText = input_text
     generatedText = ""
     fire.Fire(interact_model)
     return generatedText
