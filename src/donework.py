@@ -1,7 +1,9 @@
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import requests
-from  src.gpt_2.src.interactive_conditional_samples import generateSample
+from src.gpt_2.src.interactive_conditional_samples import generateSample
+from src.gpt_2.src.check_if_correct import getNounImage
+#from src.similarity.search import search
 
 GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
 GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
@@ -18,7 +20,8 @@ def index():
 
 @flask_app.route('/image')
 def image():      
-    imageName = request.args.get('imageName')
+    text = request.args.get('text')
+    imageName = getNounImage(text)
     # defining a params dict for the parameters to be sent to the API 
     PARAMS = {
         'key': GOOGLE_API_KEY,
@@ -30,12 +33,14 @@ def image():
     r = requests.get(url = GOOGLE_API_URL, params = PARAMS) 
     # extracting data in json format 
     data = r.json() 
-    return jsonify(data['items'][0]['link'])
+    return jsonify([data['items'][0]['link'], imageName])
 
 
 @flask_app.route('/generate')
 def generate():
     inputText = request.args.get('inputText')
+    #paragraf = search(inputText)
+    #generatedText = generatedSample(paragraf)
     generatedText = generateSample(inputText)
     return jsonify(generatedText)
 
