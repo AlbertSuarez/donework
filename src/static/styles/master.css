@@ -3,6 +3,9 @@ body{
   margin:1em;
   background: #D0D0D0;
   }
+  h1{
+    font-family: 'Inconsolata', monospace;
+  }
 .input{
   border-radius: 5px;
   margin:0 auto;
@@ -10,13 +13,34 @@ body{
   height: 100%;
   width: 100%;
   font-size: 1em;
-  max-width: 900px;
+  max-width: 800px;
   background-color: #2d2d2d;
   color: 	white;
   font-family: 'Inconsolata', monospace;
   outline: none;
   display: block;
 }
+.target{
+    border-radius: 5px;
+    margin:0 auto;
+    padding: 5em;
+    outline: none;
+    margin-top:1em;
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+    font-size: 1em;
+    max-width: 800px;
+    background-color: #2d2d2d;
+    color: 	white;
+    font-family: 'Inconsolata', monospace;
+    outline: none;
+    display: block;
+}
+button{
+  font-family: 'Inconsolata', monospace;
+  margin-bottom: 1em;
+  outline: none;  
+  border-radius:10px;
+}
 
-
-   
