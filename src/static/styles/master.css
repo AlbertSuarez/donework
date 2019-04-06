@@ -27,7 +27,7 @@ body{
     outline: none;
     margin-top:1em;
     visibility: visible;
-    height: 400px;
+    height: 100%;
     width: 100%;
     font-size: 1em;
     max-width: 800px;
