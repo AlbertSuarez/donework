@@ -44,11 +44,11 @@ def _search(index, features, paragraphs):
 
     duplicate_text = ''
     for paragraph_id, dist in zip(closest, distances):
-        m = paragraphs[paragraph_id]
-        paragraph_text = '{}'.format(m[1])
+        paragraph_text = paragraphs[paragraph_id]
         if not duplicate_text:
             duplicate_text = paragraph_text
-        log.info('Searching... Distance: {} | Paragraph: {}'.format(dist, paragraph_text))
+        log.info('Searching... Distance: {} | ID: {} | Length: {}'.format(dist, paragraph_id, len(paragraph_text)))
+        log.info(paragraph_text)
 
     return duplicate_text
 
@@ -75,4 +75,4 @@ def search(title, description):
 
 if __name__ == '__main__':
     args = _parse_args()
-    log.info(search('Aristocrats', 'Jesters and their masters.'))
+    log.info(search('XbustedX', 'The Sons of Abraham and Palumbo'))
