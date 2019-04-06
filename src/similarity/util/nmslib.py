@@ -6,9 +6,10 @@ class Nmslib:
     def __init__(self, metric='l2', method='hnsw'):
         self._metric = metric
         self._method = method
-        self._index = nmslib.init(space=self._metric, method=self._method)
+        self._index = None
 
     def fit(self, x):
+        self._index = nmslib.init(space=self._metric, method=self._method)
         self._index.addDataPointBatch(x)
         self._index.createIndex(index_params={'efConstruction': 500}, print_progress=True)
         self._index.setQueryTimeParams(params={'efSearch': 500})
