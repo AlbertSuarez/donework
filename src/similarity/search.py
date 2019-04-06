@@ -3,8 +3,8 @@ import argparse
 
 from src import *
 from src.util import log
-from src.similarity.nmslib_util import Nmslib
-from src.similarity.word_util import load_csv
+from src.similarity.util import helper
+from src.similarity.util.nmslib import Nmslib
 
 
 def _parse_args():
@@ -22,16 +22,24 @@ def _load_index():
 
 def _load_csv():
     csv_path = os.path.join(args.output_path, CSV_FILE_NAME)
-    paragraphs = load_csv(csv_path)
+    paragraphs = helper.load_csv(csv_path)
     return paragraphs
 
 
-def _extract_features():
-    return []
+def _extract_features(title, description):
+    new_paragraph = title + description
+
+    w2v_path = os.path.join(args.output_path, W2V_FILE_NAME)
+    new_paragraph_model = helper.load_w2v(w2v_path)
+
+    paragraphs_vector = helper.normalize((new_paragraph, new_paragraph_model))
+    x = paragraphs_vector.reshape((1, NUM_FEATURES))
+
+    return x
 
 
 def _search(index, features, paragraphs):
-    results = index.knnQueryBatch(features, NEIGHBOURHOOD_AMOUNT)
+    results = index.batch_query(features, NEIGHBOURHOOD_AMOUNT)
     closest, distances = results[0]
 
     duplicate_text = ''
@@ -55,10 +63,16 @@ def search(title, description):
     log.info('CSV loaded. Rows: {}'.format(len(paragraphs)))
 
     log.info('Extracting features...')
-    features = _extract_features()
+    features = _extract_features(title, description)
     log.info('Features extracted.')
+
+    log.info('Searching...')
+    duplicate_text = _search(index, features, paragraphs)
+    log.info('Done! {}'.format(duplicate_text))
+
+    return duplicate_text
 
 
 if __name__ == '__main__':
     args = _parse_args()
-    search('Introduction', 'Few concepts about the whale characteristics.')
+    log.info(search('Aristocrats', 'Jesters and their masters.'))
