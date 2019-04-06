@@ -9,15 +9,21 @@
         <meta name="keywords" content="content generator ml hackathon copenhacks openai ai">
         <meta name="author" content="Donework team">
 
+         <!-- This one is to render the mardown -->
+         <script src=" https://cdn.jsdelivr.net/npm/showdown@<version tag>/dist/showdown.min.js"></script>
+        <script src="js/script.js"></script>
         <link rel='stylesheet' href="{{ url_for('static', filename='styles/master.css') }}">        
         <title>Donework | Content generator</title>
     </head>
 
     <body>
         <h1>Donework</h1> 
-        <button id="genButton" onclick="generateText()">HIT ME UP BABY</button>       
+        <button id="genButton" onclick="generateText()">HIT ME UP BABY</button> 
+        <button id="genPreview" onclick="run()">Preview BRO</button> 
         <textarea class="input" id="textInput" placeholder="Insert here the topic of your homework..."></textarea> 
-
+        <br>
+        <div class="target" id="targetDiv"></div>
+        
         <script src="{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 
