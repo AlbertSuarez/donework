@@ -9,9 +9,7 @@
         <meta name="keywords" content="content generator ml hackathon copenhacks openai ai">
         <meta name="author" content="Donework team">
 
-         <!-- This one is to render the mardown -->
-         <script src=" https://cdn.jsdelivr.net/npm/showdown@<version tag>/dist/showdown.min.js"></script>
-        <script src="js/script.js"></script>
+      
         <link rel='stylesheet' href="{{ url_for('static', filename='styles/master.css') }}">        
         <title>Donework | Content generator</title>
     </head>
@@ -24,6 +22,8 @@
         <br>
         <div class="target" id="targetDiv"></div>
         
+        <!-- This one is to render the mardown -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
         <script src="{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 
