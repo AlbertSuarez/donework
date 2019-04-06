@@ -27,10 +27,12 @@ def normalize(arguments):
     paragraph, paragraphs2vec = arguments
     vector_sum = 0
     paragraph = clean_paragraph(paragraph)
+    n_words = 0
     for word in paragraph:
         if word in paragraphs2vec:
             vector_sum = vector_sum + paragraphs2vec[word]
-    return vector_sum
+            n_words += 1
+    return vector_sum/n_words
 
 
 def re_shape(paragraphs_vector):
