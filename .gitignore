@@ -110,3 +110,14 @@ venv3/
 .vs
 .vscode
 *.xml
+
+
+# GPT-2
+src/gpt-2/__pycache__
+src/gpt-2/models/
+src/gpt-2/checkpoint
+src/gpt-2/samples
+src/gpt-2/gpt-2-samples/
+src/gpt-2/trainingData/
+src/gpt-2/LICENSE
+
