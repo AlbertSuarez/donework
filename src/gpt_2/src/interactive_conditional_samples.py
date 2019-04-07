@@ -109,4 +109,5 @@ def generateSample(input_text):
     inputText = input_text
     generatedText = ""
     fire.Fire(interact_model)
+    generatedText.replace("\n","<br>")
     return generatedText

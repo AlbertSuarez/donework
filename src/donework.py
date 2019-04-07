@@ -21,6 +21,7 @@ def index():
 @flask_app.route('/image')
 def image():      
     text = request.args.get('text')
+    print(text)
     imageName = getNounImage(text)
     print(imageName)
     # defining a params dict for the parameters to be sent to the API 
