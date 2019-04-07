@@ -4,6 +4,8 @@ import multiprocessing
 import numpy as np
 import gensim.models.word2vec as w2v
 
+from nltk.corpus import stopwords
+
 from src import *
 
 
@@ -18,7 +20,6 @@ def load_w2v(w2v_path):
 
 
 def clean_paragraph(paragraph):
-    from nltk.corpus import stopwords
     stop_words = set(stopwords.words('english'))
     translator = str.maketrans('', '', string.punctuation)
     paragraph = paragraph.translate(translator)
