@@ -1,7 +1,6 @@
 
 
 function run() {
-  document.getElementById("targetDiv").style.visibility = "visible"; 
   var text = document.getElementById('textInput').value,
       target = document.getElementById('targetDiv'),
       converter = new showdown.Converter(),
@@ -70,3 +69,14 @@ function generateImage() {
   xhr.send();
 }
 
+
+function make_preview(el) {
+
+  run();
+  autoScrollTo(el);
+}
+
+function autoScrollTo(el) {
+  var top = $("#" + el).offset().top;
+  $("html, body").animate({ scrollTop: top }, 1000);
+}

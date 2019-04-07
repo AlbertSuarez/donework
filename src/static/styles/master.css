@@ -1,25 +1,112 @@
 
-body{
-  margin:1em;
-  background: #D0D0D0;
-  }
-  h1{
-    font-family: 'Inconsolata', monospace;
-  }
-.input{
-  border-radius: 5px;
-  margin:0 auto;
-  padding: 5em;
-  height: 600px;
-  width: 100%;
-  font-size: 1em;
-  max-width: 800px;
-  background-color: #2d2d2d;
-  color: 	white;
-  font-family: 'Inconsolata', monospace;
-  outline: none;
-  display: block;
+html, body{
+  font-family: 'Montserrat', sans-serif;
+
+  min-height: 100%;
+  height: auto;
 }
+
+body {
+  height: -webkit-fill-available;
+}
+
+.bg-primary-color {
+  background-color: #0F407A;
+}
+
+.container-fluid, .row-side-bar {
+  height: inherit;
+}
+
+
+/********** SIDEBAR *************/
+
+.sidebar {
+  min-height: 100%;
+  height: auto;
+
+
+  box-shadow: 0 2px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+.sidebar h1 {
+
+  font-weight: 700;
+  color: white;
+
+  margin-top: 0.75em;
+  padding: 0.5em;
+
+  text-align: right;
+}
+
+.sidebar h2 {
+
+  margin: 0.5em;
+  text-align: right;
+
+  color: white;
+  font-weight: 400;
+  font-size: 20px;
+
+}
+
+
+/* 1.Elements */
+
+
+#line {
+  width: 10px;
+  height: 95em;
+  background-color: white;
+  border-radius: 20px;
+  margin: 2em;
+  margin-right: 3em;
+  right: 0;
+  position: absolute;
+}
+
+
+/** GENERATE **/
+
+
+.generate {
+  width: 100%;
+  margin-top: 5em;
+}
+
+.generate .content {
+  text-align: right;
+}
+
+.generate .content p {
+  color: white;
+
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.generate .content button {
+  font-weight: 700;
+  padding: 1em !important;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+}
+
+
+/** PREVIEW **/
+
+
+#preview-bar {
+  margin-top: 90%;
+}
+
+
+#download-bar {
+  margin-top: 160%;
+}
+
 .target{
     border-radius: 5px;
     margin:0 auto;
@@ -37,10 +124,96 @@ body{
     outline: none;
     display: block;
 }
-button{
-  font-family: 'Inconsolata', monospace;
-  margin-bottom: 1em;
-  outline: none;  
-  border-radius:10px;
+
+
+/*** MAIN CONTENT ***/
+
+
+.box-container  {
+
+  padding: 3em; 
+
 }
 
+
+.box-container h2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: normal;
+  
+
+  color: #0F407A;
+}
+
+.box-container .content-text {
+  margin-top: 4em; 
+}
+
+.text-area{
+  border-radius: 5px;
+  resize: none;
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+} 
+
+
+.content-text {
+  width: 80%;
+
+  color:  #0F407A;
+
+  padding: 3em;
+
+  
+  font-size: 1em;
+
+  height: 40em;
+}
+
+.preview-text-area {
+  background-color: rgb(238, 238, 238);
+  max-width: 80%;
+  overflow: auto;
+}
+
+
+.preview-text-area h1 {
+  font-size: 26px;
+}
+
+.preview-text-area h2 {
+  font-size: 22px;
+  color: #2d2d2d;
+}
+
+.preview-text-area p {
+  color: #222222;
+  font-size: 16px;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/** By sections **/
+
+.write {
+  margin-top: 6em;
+}
