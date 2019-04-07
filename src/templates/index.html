@@ -11,7 +11,7 @@
     <meta name="author" content="Donework team">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-       
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
     <link rel='stylesheet' href="{{ url_for('static', filename='styles/master.css') }}">
     <title>Donework | Content generator</title>
@@ -35,10 +35,14 @@
                 <div id="line"></div>
                 <div class="generate">
                     <div class="row">
-                        <div class="col-10 content" id = "generate-bar">
+                        <div class="col-10 content" id="generate-bar">
                             <p>Are you ready for some magic?</p>
-                            <button id="generate-button" type="button" class="btn btn-light" onclick="generateText();">GENERATE</button>
-                            <button id="generate-image-button" type="button" class="btn btn-light" style ="margin-top:20px; " onclick="generateImage();">ADD PICTURE</button>
+                            <button id="generate-button" type="button" class="btn btn-light"
+                                onclick="generateText();">GENERATE</button>
+
+                            <div class="separator"></div>
+                            <button id="generate-image-button" type="button" class="btn btn-light"
+                                style="margin-top:20px; " onclick="generateImage();">ADD PICTURE</button>
                         </div>
                         <div class="col-2">
                             <div class="point"></div>
@@ -46,9 +50,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-10 content" id = "preview-bar">
+                        <div class="col-10 content" id="preview-bar">
                             <p>It this look pretty?</p>
-                            <button id="preview-button" type="button" class="btn btn-light" onclick="make_preview('preview-text');">PREVIEW</button>
+                            <button id="preview-button" type="button" class="btn btn-light"
+                                onclick="make_preview('preview-text');">PREVIEW</button>
                         </div>
                         <div class="col-2">
                             <div class="point"></div>
@@ -56,7 +61,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-10 content" id = "download-bar">
+                        <div class="col-10 content" id="download-bar">
                             <p>Do you want to get it?</p>
                             <button type="button" class="btn btn-light" onclick="download();">DOWNLOAD PDF</button>
                         </div>
@@ -72,18 +77,24 @@
                 <div class="box-container write" id="write-text">
                     <h2>Write your titles and descriptions</h2>
                     <textarea class="content-text text-area" oninput="run()" id="textInput"
-                    placeholder="Insert here the topic of your homework..."></textarea>
+                        placeholder="Insert here the topic of your homework..."></textarea>
+                    <div id='waiting-div'>
+                        <div class="lds-dual-ring"></div>
+                    </div>
+
                 </div>
 
 
                 <div class="box-container" id="preview-text">
-                        <h2>Here you have how pretty will be:</h2>
-                        <div id="targetDiv" class="content-text preview-text-area"></div>
+                    <h2>Here you have how pretty will be:</h2>
+                    <div id="targetDiv" class="content-text preview-text-area"></div>
                 </div>
 
             </div>
         </div>
-        <div />
+    </div>
+    <footer class="bg-primary-color"></footer>
+
         <!-- This one is to render the mardown -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
