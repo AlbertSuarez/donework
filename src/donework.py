@@ -1,10 +1,12 @@
+import requests
+import subprocess
+
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
-import requests
 
 from src.gpt_2.src.interactive_conditional_samples import generate_sample
-from src.gpt_2.src.check_if_correct import getNounImage
 from src.scripts.generate import generate_paragraphs
+from src.gpt_2.src.check_if_correct import getNounImage
 
 
 GOOGLE_API_KEY = "AIzaSyBUke_bG__CWxHz90eUVThkhjEcgYuriOg"
@@ -56,3 +58,13 @@ def generate():
     return jsonify({'text': result})
 
 
+@flask_app.route('/downloadLink', methods=['POST'])
+def downloadLink():
+    body_request = request.json
+    inputText = body_request['text']
+    print("input: ", inputText)
+    with open('src/inputFile.md', 'w+') as f:
+        f.write(inputText)
+    subprocess.check_output(['pandoc', '-o', 'src/inputFile.html', 'src/inputFile.md'])
+    subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', 'src/inputFile.html'])
+    return jsonify({'path': 'http://0.0.0.0:6969/static/x/output.pdf'})

@@ -1,16 +1,21 @@
-
-
 function run() {
-  var text = document.getElementById('textInput').value,
-      target = document.getElementById('targetDiv'),
-      converter = new showdown.Converter(),
-      html = converter.makeHtml(text);
-    target.innerHTML = html;
+  var text = document.getElementById('textInput').value;
+  var target = document.getElementById('targetDiv');
+
+  converter = new showdown.Converter(),
+  html = converter.makeHtml(text);
+  target.innerHTML = html;
 }
 
 function generateText() {
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
+
+    // Put slider
+    document.getElementById("waiting-div").style.display = "inline-block";
+    document.getElementById("textInput").style.display  = "none";
+
+
   // Set up our HTTP request
   var xhr = new XMLHttpRequest();
 
@@ -20,9 +25,12 @@ function generateText() {
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
       console.log('Text generated!');
+
       var json = JSON.parse(xhr.responseText)
       var generatedText = json.text;
       textInput.value = generatedText;
+      document.getElementById("textInput").style.display  = "inline-block";
+      document.getElementById("waiting-div").style.display = "none";
       run();
     } else {
       // What do when the request fails
@@ -46,16 +54,22 @@ function openlink(link){
 function download(){
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
+  console.log("Text-1: ", text);
   var xhr = new XMLHttpRequest();
   xhr.onload = function(){
     if (xhr.status >= 200 && xhr.status < 300){
-      var link = xhr.responseText;
-      console.log(link)
-      openlink(link);
+      var json = JSON.parse(xhr.responseText);
+      var fileLink = json.path;
+      openlink(fileLink);
+    } else {
+      console.log('failed')
     };
-    xhr.open('GET', 'http://0.0.0.0:6969/download?inputText='+text)
-    xhr.send();
   }
+  var url = 'http://35.187.2.140:8080/downloadLink';
+  xhr.open('POST', url);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  console.log("text: ", text);
+  xhr.send(JSON.stringify({ "text": text }));
 }
 
 function generateImage() {
@@ -93,7 +107,6 @@ function generateImage() {
 
 
 function make_preview(el) {
-
   run();
   autoScrollTo(el);
 }
