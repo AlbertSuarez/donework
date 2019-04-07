@@ -34,7 +34,7 @@ function generateText() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://0.0.0.0:6969/generate?inputText=' + text);
+  xhr.open('GET', 'http://0.0.0.0:8080/generate?inputText=' + text);
   xhr.send();
 }
 
@@ -66,7 +66,7 @@ function generateImage() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://0.0.0.0:6969/image?text=' + text);
+  xhr.open('GET', 'http://0.0.0.0:8080/image?text=' + text);
   xhr.send();
 }
 
