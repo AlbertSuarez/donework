@@ -41,12 +41,13 @@ def image():
     return jsonify({'url': data['items'][0]['link'], 'name': imageName})
 
 
-@flask_app.route('/generate')
+@flask_app.route('/generate', methods=['GET', 'POST'])
 def generate():
-    input_text = request.args.get('inputText')
+    body_request = request.json
+    input_text = body_request['text']
     paragraphs = generate_paragraphs(input_text)
     for idx, p in enumerate(paragraphs):
-        generated_text = generate_sample(input_text)
+        generated_text = generate_sample(p[2])
         paragraphs[idx].append(generated_text)
 
     result = ''

@@ -33,7 +33,9 @@ function generateText() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://35.187.2.140:8080/generate?inputText=' + text);
+  xhr.open('POST', 'http://35.187.2.140:8080/generate');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify({ "text": text }));
   xhr.send();
 }
 
