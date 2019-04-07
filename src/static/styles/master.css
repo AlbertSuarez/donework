@@ -50,6 +50,7 @@ html, body{
 }
 
 
+
 /* 1.Elements */
 
 
@@ -80,7 +81,7 @@ html, body{
 .generate .content p {
   color: white;
 
-  font-weight: 500;
+  font-weight: 700;
   font-size: 18px;
 }
 
@@ -91,6 +92,23 @@ html, body{
   padding-right: 2em !important;
 }
 
+
+.generate .content .question{
+
+  background-color: #CCCC;
+  margin-left: 2em;
+  padding: 1em;
+  border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.generate .content .question p {
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: black;
+  letter-spacing: 3px;
+}
 
 /** PREVIEW **/
 
@@ -261,4 +279,49 @@ footer {
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+  padding-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #ffffff; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.9; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  border-radius: 20px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: rgb(91, 143, 206); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 20px;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: rgb(91, 143, 206);   /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 20px;
 }
