@@ -1,16 +1,21 @@
-from flask import Flask, render_template, jsonify, request
-from flask_cors import CORS
+import os
+import uuid
 import requests
 import subprocess
-from src.gpt_2.src.interactive_conditional_samples import generateSample
-from src.gpt_2.src.check_if_correct import getNounImage#paragraf = search(inputText)
-    #generatedText = generatedSample(paragraf)
-from src import *
-#from src.similarity.search import search
 
-GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
-GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
+from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
+
+from src import *
+from src.gpt_2.src.interactive_conditional_samples import generate_sample
+from src.scripts.generate import generate_paragraphs
+from src.gpt_2.src.check_if_correct import getNounImage
+
+
+GOOGLE_API_KEY = "AIzaSyBUke_bG__CWxHz90eUVThkhjEcgYuriOg"
+GOOGLE_API_CX = "008963708105875785601:juwtk69stuu"
 GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1"
+
 
 flask_app = Flask(__name__, template_folder='templates/')
 CORS(flask_app)
@@ -21,42 +26,49 @@ def index():
     return render_template('index.html')
 
 
-@flask_app.route('/image')
-def image():      
-    text = request.args.get('text')
-    print(text)
-    imageName = getNounImage(text)
-    print(imageName)
-    # defining a params dict for the parameters to be sent to the API 
-    PARAMS = {
+@flask_app.route('/image', methods=['GET', 'POST'])
+def image():
+    body_request = request.json
+    input_text = body_request['text']
+    image_name = getNounImage(input_text)
+    # defining a params dict for the parameters to be sent to the API
+    params = {
         'key': GOOGLE_API_KEY,
         'cx': GOOGLE_API_CX,
-        'q': imageName,
+        'q': image_name,
         'searchType': "image"
     } 
     # sending get request and saving the response as response object 
-    r = requests.get(url = GOOGLE_API_URL, params = PARAMS) 
+    r = requests.get(url=GOOGLE_API_URL, params=params)
     # extracting data in json format 
     data = r.json() 
-    return jsonify({'url': data['items'][0]['link'], 'name':imageName})
+    return jsonify({'url': data['items'][0]['link'], 'name': image_name})
 
 
-@flask_app.route('/generate')
+@flask_app.route('/generate', methods=['GET', 'POST'])
 def generate():
-    inputText = request.args.get('inputText')
-    #paragraf = search(inputText)
-    #generatedText = generatedSample(paragraf)
-    generatedText = generateSample(inputText)
-    return jsonify({'text': generatedText})
+    body_request = request.json
+    input_text = body_request['text']
+    paragraphs = generate_paragraphs(input_text)
+    for idx, p in enumerate(paragraphs):
+        sample_idx = 1 if len(p) == 2 else 2
+        generated_text = generate_sample(p[sample_idx])
+        paragraphs[idx].append(generated_text)
+
+    result = ''
+    for p in paragraphs:
+        result += '\n\n'.join(p)
+
+    return jsonify({'text': result})
 
 
 @flask_app.route('/downloadLink', methods=['POST'])
 def downloadLink():
     body_request = request.json
-    inputText = body_request['text']
-    print("input: ", inputText)
-    with open('src/inputFile.md', 'w+') as f:
-        f.write(inputText)
-    subprocess.check_output(['pandoc', '-o', 'src/inputFile.html', 'src/inputFile.md'])
-    subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', 'src/inputFile.html'])
-    return jsonify({'path': 'http://0.0.0.0:6969/static/x/output.pdf'})
+    input_text = body_request['text']
+    correlation_id = str(uuid.uuid4())
+    with open(os.path.join(OUTPUT_PATH, '{}.md'.format(correlation_id)), 'w+') as f:
+        f.write(input_text)
+    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id)), os.path.join(OUTPUT_PATH, '{}.md'.format(correlation_id))])
+    subprocess.check_output(['pandoc', '-o', 'src/static/x/{}.pdf'.format(correlation_id), os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id))])
+    return jsonify({'path': 'http://35.187.2.140:8080/static/x/{}.pdf'.format(correlation_id)})

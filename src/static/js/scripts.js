@@ -1,5 +1,3 @@
-
-
 function run() {
   var text = document.getElementById('textInput').value;
   var target = document.getElementById('targetDiv');
@@ -32,7 +30,7 @@ function generateText() {
 
       var json = JSON.parse(xhr.responseText)
       var generatedText = json.text;
-      textInput.value = text + generatedText;
+      textInput.value = generatedText;
       document.getElementById("textInput").style.display  = "inline-block";
       document.getElementById("waiting-div").style.display = "none";
       run();
@@ -45,7 +43,9 @@ function generateText() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://0.0.0.0:6969/generate?inputText=' + text);
+  xhr.open('POST', 'http://35.187.2.140:8080/generate');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify({ "text": text }));
   xhr.send();
 }
 
@@ -67,7 +67,7 @@ function download(){
       console.log('failed')
     };
   }
-  var url = 'http://0.0.0.0:6969/downloadLink';
+  var url = 'http://35.187.2.140:8080/downloadLink';
   xhr.open('POST', url);
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   console.log("text: ", text);
@@ -101,18 +101,14 @@ function generateImage() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://0.0.0.0:6969/image?text=' + text);
+  xhr.open('POST', 'http://35.187.2.140:8080/image');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify({ "text": text }));
   xhr.send();
 }
 
 
 function make_preview(el) {
-
-  // Esconder texto
-
-  //Poner slider
-
-
   run();
   autoScrollTo(el);
 }

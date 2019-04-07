@@ -5,6 +5,9 @@ import json
 import regex as re
 from functools import lru_cache
 
+from src import *
+
+
 @lru_cache()
 def bytes_to_unicode():
     """
@@ -105,10 +108,11 @@ class Encoder:
         text = bytearray([self.byte_decoder[c] for c in text]).decode('utf-8', errors=self.errors)
         return text
 
+
 def get_encoder(model_name):
-    with open(os.path.join('src/gpt_2/models', model_name, 'encoder.json'), 'r') as f:
+    with open(os.path.join(MODEL_PATH, model_name, 'encoder.json'), 'r') as f:
         encoder = json.load(f)
-    with open(os.path.join('src/gpt_2/models', model_name, 'vocab.bpe'), 'r', encoding="utf-8") as f:
+    with open(os.path.join(MODEL_PATH, model_name, 'vocab.bpe'), 'r', encoding="utf-8") as f:
         bpe_data = f.read()
     bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split('\n')[1:-1]]
     return Encoder(

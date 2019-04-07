@@ -10,4 +10,4 @@ Fire
 tensorflow
 regex
 nltk
-subprocess
+subprocess.run

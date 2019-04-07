@@ -110,7 +110,7 @@ venv3/
 .vs
 .vscode
 *.xml
-
+*.pdf
 
 # GPT-2
 src/gpt_2/__pycache__

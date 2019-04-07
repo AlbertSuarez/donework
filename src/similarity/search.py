@@ -1,22 +1,9 @@
 import os
 
 from src import *
+from src.similarity import paragraphs, nmslib_index
 from src.util import log
 from src.similarity.util import helper
-from src.similarity.util.nmslib import Nmslib
-
-
-def _load_index():
-    index_path = os.path.join(OUTPUT_PATH, INDEX_FILE_NAME)
-    index = Nmslib()
-    index.load(index_path)
-    return index
-
-
-def _load_csv():
-    csv_path = os.path.join(OUTPUT_PATH, CSV_FILE_NAME)
-    paragraphs = helper.load_csv(csv_path)
-    return paragraphs
 
 
 def _extract_features(title, description):
@@ -31,14 +18,14 @@ def _extract_features(title, description):
     return x
 
 
-def _search(index, features, paragraphs):
+def _search(index, features):
     results = index.batch_query(features, NEIGHBOURHOOD_AMOUNT)
     closest, distances = results[0]
 
-    duplicate_text = ''
+    duplicate_text = None
     for paragraph_id, dist in zip(closest, distances):
         paragraph_text = paragraphs[paragraph_id]
-        if not duplicate_text:
+        if not duplicate_text and dist <= DISTANCE_THRESHOLD:
             duplicate_text = paragraph_text
         log.info('Searching... Distance: {} | ID: {} | Length: {}'.format(dist, paragraph_id, len(paragraph_text)))
         log.info(paragraph_text)
@@ -47,20 +34,12 @@ def _search(index, features, paragraphs):
 
 
 def search(title, description):
-    log.info('Loading index...')
-    index = _load_index()
-    log.info('Index loaded. Index: {}'.format(index))
-
-    log.info('Loading CSV...')
-    paragraphs = _load_csv()
-    log.info('CSV loaded. Rows: {}'.format(len(paragraphs)))
-
     log.info('Extracting features...')
     features = _extract_features(title, description)
     log.info('Features extracted.')
 
     log.info('Searching...')
-    duplicate_text = _search(index, features, paragraphs)
+    duplicate_text = _search(nmslib_index, features)
     log.info('Done! {}'.format(duplicate_text))
 
     return duplicate_text
