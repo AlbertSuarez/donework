@@ -1,9 +1,11 @@
+import os
 import requests
 import subprocess
 
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 
+from src import *
 from src.gpt_2.src.interactive_conditional_samples import generate_sample
 from src.scripts.generate import generate_paragraphs
 from src.gpt_2.src.check_if_correct import getNounImage
@@ -61,10 +63,9 @@ def generate():
 @flask_app.route('/downloadLink', methods=['POST'])
 def downloadLink():
     body_request = request.json
-    inputText = body_request['text']
-    print("input: ", inputText)
-    with open('src/inputFile.md', 'w+') as f:
-        f.write(inputText)
-    subprocess.check_output(['pandoc', '-o', 'src/inputFile.html', 'src/inputFile.md'])
-    subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', 'src/inputFile.html'])
-    return jsonify({'path': 'http://0.0.0.0:6969/static/x/output.pdf'})
+    input_text = body_request['text']
+    with open(os.path.join(OUTPUT_PATH, 'inputFile.md'), 'w+') as f:
+        f.write(input_text)
+    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, 'inputFile.html'), os.path.join(OUTPUT_PATH, 'inputFile.md')])
+    subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', os.path.join(OUTPUT_PATH, 'inputFile.html')])
+    return jsonify({'path': 'http://35.187.2.140:6969/static/x/output.pdf'})
