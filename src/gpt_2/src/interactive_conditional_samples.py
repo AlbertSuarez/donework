@@ -73,5 +73,4 @@ def generate_sample(input_text):
     inputText = input_text
     generatedText = ""
     fire.Fire(interact_model)
-    generatedText = generatedText.replace('\n', "  <br />  ")
     return generatedText

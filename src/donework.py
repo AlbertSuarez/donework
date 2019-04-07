@@ -1,15 +1,10 @@
-import os
-
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import requests
 
-from src import *
 from src.gpt_2.src.interactive_conditional_samples import generate_sample
 from src.gpt_2.src.check_if_correct import getNounImage
 from src.scripts.generate import generate_paragraphs
-from src.similarity.util import helper
-from src.similarity.util.nmslib import Nmslib
 
 
 GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
@@ -58,6 +53,6 @@ def generate():
     for p in paragraphs:
         result += '\n\n'.join(p)
 
-    return jsonify(result)
+    return jsonify({'text': result})
 
 
