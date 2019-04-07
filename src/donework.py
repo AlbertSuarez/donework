@@ -7,8 +7,8 @@ from src.gpt_2.src.check_if_correct import getNounImage
 from src.scripts.generate import generate_paragraphs
 
 
-GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
-GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
+GOOGLE_API_KEY = "AIzaSyBUke_bG__CWxHz90eUVThkhjEcgYuriOg"
+GOOGLE_API_CX = "008963708105875785601:juwtk69stuu"
 GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1"
 
 
