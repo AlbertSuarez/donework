@@ -13,7 +13,7 @@ def _parse_args():
     return parser.parse_args()
 
 
-def generate(md_text):
+def generate_paragraphs(md_text):
     paragraphs_generated = []
     content = [line for line in md_text.splitlines() if line]
 
@@ -30,4 +30,4 @@ if __name__ == '__main__':
     args = _parse_args()
     with open(args.md_file, 'r', encoding='utf-8') as f:
         md_text_file = f.read()
-    log.info(generate(md_text_file))
+    log.info(generate_paragraphs(md_text_file))

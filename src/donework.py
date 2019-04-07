@@ -1,9 +1,10 @@
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import requests
+
 from src.gpt_2.src.interactive_conditional_samples import generateSample
 from src.gpt_2.src.check_if_correct import getNounImage
-#from src.similarity.search import search
+from src.scripts.generate import generate_paragraphs
 
 GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
 GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
@@ -32,18 +33,24 @@ def image():
         'searchType': "image"
     } 
     # sending get request and saving the response as response object 
-    r = requests.get(url = GOOGLE_API_URL, params = PARAMS) 
+    r = requests.get(url=GOOGLE_API_URL, params=PARAMS)
     # extracting data in json format 
     data = r.json() 
-    return jsonify({'url': data['items'][0]['link'], 'name':imageName})
+    return jsonify({'url': data['items'][0]['link'], 'name': imageName})
 
 
 @flask_app.route('/generate')
 def generate():
-    inputText = request.args.get('inputText')
-    #paragraf = search(inputText)
-    #generatedText = generatedSample(paragraf)
-    generatedText = generateSample(inputText)
-    return jsonify(generatedText)
+    input_text = request.args.get('inputText')
+    paragraphs = generate_paragraphs(input_text)
+    for idx, p in enumerate(paragraphs):
+        generated_text = generateSample(input_text)
+        paragraphs[idx].append(generated_text)
+
+    result = ''
+    for p in paragraphs:
+        result += '\n\n'.join(p)
+
+    return jsonify(result)
 
 

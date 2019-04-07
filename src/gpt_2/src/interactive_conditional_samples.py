@@ -97,11 +97,10 @@ def interact_model(
                 print(text)
         print("=" * 80)
 
-    
-
 
 if __name__ == '__main__':
     fire.Fire(interact_model)
+
 
 def generateSample(input_text):
     global generatedText
@@ -109,5 +108,5 @@ def generateSample(input_text):
     inputText = input_text
     generatedText = ""
     fire.Fire(interact_model)
-    generatedText.replace("\n","<br>")
+    generatedText.replace("\n", "<br>")
     return generatedText
