@@ -21,24 +21,23 @@ def index():
     return render_template('index.html')
 
 
-@flask_app.route('/image')
-def image():      
-    text = request.args.get('text')
-    print(text)
-    imageName = getNounImage(text)
-    print(imageName)
-    # defining a params dict for the parameters to be sent to the API 
-    PARAMS = {
+@flask_app.route('/image', methods=['GET', 'POST'])
+def image():
+    body_request = request.json
+    input_text = body_request['text']
+    image_name = getNounImage(input_text)
+    # defining a params dict for the parameters to be sent to the API
+    params = {
         'key': GOOGLE_API_KEY,
         'cx': GOOGLE_API_CX,
-        'q': imageName,
+        'q': image_name,
         'searchType': "image"
     } 
     # sending get request and saving the response as response object 
-    r = requests.get(url=GOOGLE_API_URL, params=PARAMS)
+    r = requests.get(url=GOOGLE_API_URL, params=params)
     # extracting data in json format 
     data = r.json() 
-    return jsonify({'url': data['items'][0]['link'], 'name': imageName})
+    return jsonify({'url': data['items'][0]['link'], 'name': image_name})
 
 
 @flask_app.route('/generate', methods=['GET', 'POST'])

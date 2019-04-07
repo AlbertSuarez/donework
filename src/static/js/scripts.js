@@ -22,7 +22,7 @@ function generateText() {
       console.log('Text generated!');
       var json = JSON.parse(xhr.responseText)
       var generatedText = json.text;
-      textInput.value = text + generatedText;
+      textInput.value = generatedText;
       run();
     } else {
       // What do when the request fails
@@ -85,7 +85,9 @@ function generateImage() {
   // Create and send a GET request
   // The first argument is the post type (GET, POST, PUT, DELETE, etc.)
   // The second argument is the endpoint URL
-  xhr.open('GET', 'http://35.187.2.140:8080/image?text=' + text);
+  xhr.open('POST', 'http://35.187.2.140:8080/image');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify({ "text": text }));
   xhr.send();
 }
 
