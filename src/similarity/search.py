@@ -1,7 +1,7 @@
 import os
 
 from src import *
-from src.donework import paragraphs, nmslib_index
+from src.similarity import paragraphs, nmslib_index
 from src.util import log
 from src.similarity.util import helper
 

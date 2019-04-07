@@ -20,13 +20,6 @@ GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1"
 flask_app = Flask(__name__, template_folder='templates/')
 CORS(flask_app)
 
-csv_path = os.path.join(OUTPUT_PATH, CSV_FILE_NAME)
-paragraphs = helper.load_csv(csv_path)
-
-index_path = os.path.join(OUTPUT_PATH, INDEX_FILE_NAME)
-nmslib_index = Nmslib()
-nmslib_index.load(index_path)
-
 
 @flask_app.route('/')
 def index():
