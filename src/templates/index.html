@@ -1,34 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
 
-        <meta name="description" content="Content generator given a table of content using Machine Learning and search similarity.">
-        <meta name="keywords" content="content generator ml hackathon copenhacks openai ai">
-        <meta name="author" content="Donework team">
+    <meta name="description"
+        content="Content generator given a table of content using Machine Learning and search similarity.">
+    <meta name="keywords" content="content generator ml hackathon copenhacks openai ai">
+    <meta name="author" content="Donework team">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+       
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link rel='stylesheet' href="{{ url_for('static', filename='styles/master.css') }}">
+    <title>Donework | Content generator</title>
+</head>
 
-      
-        <link rel='stylesheet' href="{{ url_for('static', filename='styles/master.css') }}">        
-        <title>Donework | Content generator</title>
-    </head>
-
-    <body>
-        <h1>Donework</h1> 
+<body>
+    <!-- <h1>Donework</h1> 
         <button id="genButton" onclick="generateText()">HIT ME UP BABY</button> 
         <button id="genImage" onclick="generateImage()">IMAGINEX ACTIVA TU AVENTURA</button> 
-        <!-- <button id="genPreview" onclick="run()">Preview BRO</button>  -->
-        <textarea class="input" oninput="run()" id="textInput" placeholder="Insert here the topic of your homework..."></textarea> 
+        <button id="genPreview" onclick="run()">Preview BRO</button> 
         <br>
-        <div class="target" id="targetDiv"></div>
-        
+        <div class="target" id="targetDiv"></div> -->
+
+
+    <div class="container-fluid">
+        <div class="row row-side-bar">
+            <div class="sidebar bg-primary-color col-3 ">
+                <h1>Donework</h1>
+                <h2>Create a document from you own headings !</h2>
+
+                <div id="line"></div>
+                <div class="generate">
+                    <div class="row">
+                        <div class="col-10 content" id = "generate-bar">
+                            <p>Are you ready for some magic?</p>
+                            <button id="generate-button" type="button" class="btn btn-light" onclick="generateText();">GENERATE</button>
+                        </div>
+                        <div class="col-2">
+                            <div class="point"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-10 content" id = "preview-bar">
+                            <p>It this look pretty?</p>
+                            <button id="preview-button" type="button" class="btn btn-light" onclick="make_preview('preview-text');">PREVIEW</button>
+                        </div>
+                        <div class="col-2">
+                            <div class="point"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-10 content" id = "download-bar">
+                            <p>Do you want to get it?</p>
+                            <button type="button" class="btn btn-light">DOWNLOAD PDF</button>
+                        </div>
+                        <div class="col-2">
+                            <div class="point"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+
+                <div class="box-container write" id="write-text">
+                    <h2>Write your titles and descriptions</h2>
+                    <textarea class="content-text text-area" oninput="run()" id="textInput"
+                    placeholder="Insert here the topic of your homework..."></textarea>
+                </div>
+
+
+                <div class="box-container" id="preview-text">
+                        <h2>Here you have how pretty will be:</h2>
+                        <div id="targetDiv" class="content-text preview-text-area"></div>
+                </div>
+
+            </div>
+        </div>
+        <div />
         <!-- This one is to render the mardown -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <!-- <script src="assets/js/main.js"></script> -->
-    </body>
+</body>
 
 
 </html>
-

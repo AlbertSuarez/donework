@@ -4,6 +4,8 @@ INDEX_FILE_NAME = 'index.nmslib'
 CSV_FILE_NAME = 'articles.csv'
 W2V_FILE_NAME = 'articles2vector.w2v'
 
+OUTPUT_PATH = '/srv/data'
+
 NEIGHBOURHOOD_AMOUNT = 5
 NUM_FEATURES = 50
 MIN_WORD_COUNT = 1
@@ -18,6 +20,7 @@ __all__ = [
     'INDEX_FILE_NAME',
     'CSV_FILE_NAME',
     'W2V_FILE_NAME',
+    'OUTPUT_PATH',
     'NEIGHBOURHOOD_AMOUNT',
     'NUM_FEATURES',
     'MIN_WORD_COUNT',

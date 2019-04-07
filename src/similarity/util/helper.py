@@ -44,8 +44,7 @@ def normalize(arguments):
 
 def re_shape(paragraphs_vector):
     paragraphs_vector = np.array(paragraphs_vector)
-    x = np.array(paragraphs_vector).reshape((paragraphs_vector.shape[0], NUM_FEATURES))
-    return x
+    return paragraphs_vector
 
 
 def config_w2v():
