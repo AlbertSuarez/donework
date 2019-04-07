@@ -68,6 +68,6 @@ def downloadLink():
     correlation_id = str(uuid.uuid4())
     with open(os.path.join(OUTPUT_PATH, '{}.md'.format(correlation_id)), 'w+') as f:
         f.write(input_text)
-    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id)), os.path.join(OUTPUT_PATH, '{}.md')])
+    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id)), os.path.join(OUTPUT_PATH, '{}.md'.format(correlation_id))])
     subprocess.check_output(['pandoc', '-o', 'src/static/x/{}.pdf'.format(correlation_id), os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id))])
     return jsonify({'path': 'http://35.187.2.140:8080/static/x/{}.pdf'.format(correlation_id)})
