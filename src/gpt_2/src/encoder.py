@@ -5,8 +5,6 @@ import json
 import regex as re
 from functools import lru_cache
 
-from multiprocessing.dummy import Pool as ThreadPool
-
 from src import *
 
 
@@ -43,13 +41,6 @@ def get_pairs(word):
         pairs.add((prev_char, char))
         prev_char = char
     return pairs
-
-
-def _encode_thread(args):
-    encoder, token = args
-    token = ''.join(encoder.byte_encoder[b] for b in token.encode('utf-8'))
-    return [encoder.encoder[bpe_token] for bpe_token in encoder.bpe(token).split(' ')]
-
 
 class Encoder:
     def __init__(self, encoder, bpe_merges, errors='replace'):
@@ -106,10 +97,10 @@ class Encoder:
         return word
 
     def encode(self, text):
-        with ThreadPool(30) as pool:
-            pool_arguments = [(self, token) for token in re.findall(self.pat, text)]
-            result = list(pool.imap(_encode_thread, pool_arguments, 8))
-        bpe_tokens = [item for sublist in result for item in sublist]
+        bpe_tokens = []
+        for token in re.findall(self.pat, text):
+            token = ''.join(self.byte_encoder[b] for b in token.encode('utf-8'))
+            bpe_tokens.extend(self.encoder[bpe_token] for bpe_token in self.bpe(token).split(' '))
         return bpe_tokens
 
     def decode(self, tokens):
