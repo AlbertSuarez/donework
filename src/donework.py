@@ -1,17 +1,31 @@
+import os
+
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import requests
 
+from src import *
 from src.gpt_2.src.interactive_conditional_samples import generate_sample
 from src.gpt_2.src.check_if_correct import getNounImage
 from src.scripts.generate import generate_paragraphs
+from src.similarity.util import helper
+from src.similarity.util.nmslib import Nmslib
+
 
 GOOGLE_API_KEY = "AIzaSyBsgu9EkHIcsCQJJyiia1qH1WCtmWrLFvA"
 GOOGLE_API_CX = "011903039758982039198:szvtofg-7gg"
 GOOGLE_API_URL = "https://www.googleapis.com/customsearch/v1"
 
+
 flask_app = Flask(__name__, template_folder='templates/')
 CORS(flask_app)
+
+csv_path = os.path.join(OUTPUT_PATH, CSV_FILE_NAME)
+paragraphs = helper.load_csv(csv_path)
+
+index_path = os.path.join(OUTPUT_PATH, INDEX_FILE_NAME)
+nmslib_index = Nmslib()
+nmslib_index.load(index_path)
 
 
 @flask_app.route('/')

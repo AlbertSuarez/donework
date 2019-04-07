@@ -1,6 +1,7 @@
 import os
 
 from src import *
+from src.donework import paragraphs, nmslib_index
 from src.util import log
 from src.similarity.util import helper
 from src.similarity.util.nmslib import Nmslib
@@ -47,20 +48,12 @@ def _search(index, features, paragraphs):
 
 
 def search(title, description):
-    log.info('Loading index...')
-    index = _load_index()
-    log.info('Index loaded. Index: {}'.format(index))
-
-    log.info('Loading CSV...')
-    paragraphs = _load_csv()
-    log.info('CSV loaded. Rows: {}'.format(len(paragraphs)))
-
     log.info('Extracting features...')
     features = _extract_features(title, description)
     log.info('Features extracted.')
 
     log.info('Searching...')
-    duplicate_text = _search(index, features, paragraphs)
+    duplicate_text = _search(nmslib_index, features, paragraphs)
     log.info('Done! {}'.format(duplicate_text))
 
     return duplicate_text
