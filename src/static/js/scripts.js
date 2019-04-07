@@ -41,7 +41,6 @@ function generateText() {
 
 
 function generateImage() {
-  console.log("hola");
   textInput = document.getElementById('textInput');
   text = textInput.value;
   // Set up our HTTP request
@@ -52,10 +51,12 @@ function generateImage() {
     // Process our return data
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
-      var imageUrl = xhr.responseText[0];
-      imageUrl = imageUrl.substring(1,imageUrl.length-2)
+
       console.log('Image generated!', xhr.responseText);
-      textInput.value = text + '\n\n' + '<img src="' + imageUrl + '" width=300px title="' + xhr.responseText[1] +'>';
+      var json = JSON.parse(xhr.responseText)
+      var imageUrl = json.url;
+      // imageUrl = imageUrl.substring(1,imageUrl.length-2)
+      textInput.value = text + '\n\n' + '<img src="' + imageUrl + '" style="display:block;margin-left:auto;margin-right:auto;border-radius:10px;" width=300px title="' + json.name +'">';
       run();
     } else {
       // What do when the request fails
