@@ -21,7 +21,9 @@ def index():
 @flask_app.route('/image')
 def image():      
     text = request.args.get('text')
+    print(text)
     imageName = getNounImage(text)
+    print(imageName)
     # defining a params dict for the parameters to be sent to the API 
     PARAMS = {
         'key': GOOGLE_API_KEY,
@@ -33,7 +35,7 @@ def image():
     r = requests.get(url = GOOGLE_API_URL, params = PARAMS) 
     # extracting data in json format 
     data = r.json() 
-    return jsonify([data['items'][0]['link'], imageName])
+    return jsonify({'url': data['items'][0]['link'], 'name':imageName})
 
 
 @flask_app.route('/generate')

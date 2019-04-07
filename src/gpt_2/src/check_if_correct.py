@@ -37,6 +37,9 @@ def compare(text0,textos):
 
 #returns the most important word from a text in order to search later the picture
 def getNounImage(text):
+  if len(text.split(" ")) == 1:
+    return text
+    
   blob = TextBlob(text)
   tags = blob.tags  
   max = 0
