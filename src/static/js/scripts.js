@@ -12,6 +12,7 @@ function run() {
 function generateText() {
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
+  var temperature = document.getElementById('range_temperature');
 
     // Put slider
     document.getElementById("waiting-div").style.display = "inline-block";
