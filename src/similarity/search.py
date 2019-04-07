@@ -22,10 +22,10 @@ def _search(index, features):
     results = index.batch_query(features, NEIGHBOURHOOD_AMOUNT)
     closest, distances = results[0]
 
-    duplicate_text = ''
+    duplicate_text = None
     for paragraph_id, dist in zip(closest, distances):
         paragraph_text = paragraphs[paragraph_id]
-        if not duplicate_text:
+        if not duplicate_text and dist <= DISTANCE_THRESHOLD:
             duplicate_text = paragraph_text
         log.info('Searching... Distance: {} | ID: {} | Length: {}'.format(dist, paragraph_id, len(paragraph_text)))
         log.info(paragraph_text)

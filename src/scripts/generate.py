@@ -21,7 +21,9 @@ def generate_paragraphs(md_text):
         paragraphs_generated.append([content[c], content[c + 1]])
 
     for idx, data in tqdm(enumerate(paragraphs_generated), total=len(paragraphs_generated)):
-        paragraphs_generated[idx].append(search(data[0], data[1]))
+        generated = search(data[0], data[1])
+        if generated:
+            paragraphs_generated[idx].append(generated)
 
     return paragraphs_generated
 
