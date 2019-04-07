@@ -44,16 +44,22 @@ function openlink(link){
 function download(){
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
+  console.log("Text-1: ", text);
   var xhr = new XMLHttpRequest();
   xhr.onload = function(){
     if (xhr.status >= 200 && xhr.status < 300){
-      var link = xhr.responseText;
-      console.log(link)
-      openlink(link);
+      var json = JSON.parse(xhr.responseText);
+      var fileLink = json.path;
+      openlink(fileLink);
+    } else {
+      console.log('failed')
     };
-    xhr.open('GET', 'http://0.0.0.0:6969/download?inputText='+text)
-    xhr.send();
   }
+  var url = 'http://0.0.0.0:6969/downloadLink';
+  xhr.open('POST', url);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  console.log("text: ", text);
+  xhr.send(JSON.stringify({ "text": text }));
 }
 
 function generateImage() {
