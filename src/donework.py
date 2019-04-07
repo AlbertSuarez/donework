@@ -1,4 +1,5 @@
 import os
+import uuid
 import requests
 import subprocess
 
@@ -64,8 +65,9 @@ def generate():
 def downloadLink():
     body_request = request.json
     input_text = body_request['text']
-    with open(os.path.join(OUTPUT_PATH, 'inputFile.md'), 'w+') as f:
+    correlation_id = str(uuid.uuid4())
+    with open(os.path.join(OUTPUT_PATH, '{}.md'.format(correlation_id)), 'w+') as f:
         f.write(input_text)
-    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, 'inputFile.html'), os.path.join(OUTPUT_PATH, 'inputFile.md')])
-    subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', os.path.join(OUTPUT_PATH, 'inputFile.html')])
-    return jsonify({'path': 'http://35.187.2.140:8080/static/x/output.pdf'})
+    subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id)), os.path.join(OUTPUT_PATH, '{}.md')])
+    subprocess.check_output(['pandoc', '-o', 'src/static/x/{}.pdf'.format(correlation_id), os.path.join(OUTPUT_PATH, '{}.html'.format(correlation_id))])
+    return jsonify({'path': 'http://35.187.2.140:8080/static/x/{}.pdf'.format(correlation_id)})
