@@ -53,7 +53,7 @@ def generate():
     paragraphs = generate_paragraphs(input_text)
     for idx, p in enumerate(paragraphs):
         sample_idx = 1 if len(p) == 2 else 2
-        generated_text = generate_sample(p[sample_idx],rand)
+        generated_text = generate_sample(p[sample_idx],int(rand))
         paragraphs[idx].append(generated_text)
 
     result = ''
