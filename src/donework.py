@@ -44,6 +44,6 @@ def generate():
     #paragraf = search(inputText)
     #generatedText = generatedSample(paragraf)
     generatedText = generateSample(inputText)
-    return jsonify(generatedText)
+    return jsonify({'text': generatedText})
 
 
