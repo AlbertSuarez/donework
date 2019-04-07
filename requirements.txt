@@ -9,4 +9,4 @@ TextBlob
 Fire
 tensorflow
 regex
-nlkt
+nltk

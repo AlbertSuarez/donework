@@ -75,4 +75,4 @@ def search(title, description):
 
 if __name__ == '__main__':
     args = _parse_args()
-    log.info(search('XbustedX', 'The Sons of Abraham and Palumbo'))
+    log.info(search('Introduction', 'The history is always important'))

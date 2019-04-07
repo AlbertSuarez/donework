@@ -24,8 +24,9 @@ def _generate_word2vec_model():
     paragraphs = helper.load_csv(csv_path)
 
     log.info('CSV loaded - Starting to clean paragraphs...')
-    with ThreadPool(12) as pool:
-        text_corpus = list(tqdm.tqdm(pool.imap(helper.clean_paragraph, paragraphs, 1), total=len(paragraphs)))
+    text_corpus = []
+    for paragraph in tqdm.tqdm(paragraphs, total=len(paragraphs)):
+        text_corpus.append(helper.clean_paragraph(paragraph))
     log.info('Done! Now calling w2v library to configure the model.')
     articles2vec = helper.config_w2v()
     

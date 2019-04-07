@@ -28,9 +28,9 @@ def _build():
     log.info('Features loaded')
 
     log.info('Normalizing...')
-    with ThreadPool(20) as pool:
-        rows = [(row, paragraphs2vec) for row in rows]
-        paragraphs_vector = list(tqdm(pool.imap(helper.normalize, rows, 1), total=len(rows)))
+    paragraphs_vector = []
+    for row in tqdm(rows, total=len(rows)):
+        paragraphs_vector.append(helper.normalize((row, paragraphs2vec)))
     log.info('Normalized. Vectors: {}'.format(len(paragraphs_vector)))
 
     log.info('Reshaping...')
