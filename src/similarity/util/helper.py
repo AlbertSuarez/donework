@@ -39,7 +39,7 @@ def normalize(arguments):
     if n_words:
         return vector_sum/n_words
     else:
-        return np.array([])
+        return None
 
 
 def re_shape(paragraphs_vector):

@@ -30,7 +30,9 @@ def _build():
     log.info('Normalizing...')
     paragraphs_vector = []
     for row in tqdm(rows, total=len(rows)):
-        paragraphs_vector.append(helper.normalize((row, paragraphs2vec)))
+        vector_normalized = helper.normalize((row, paragraphs2vec))
+        if vector_normalized:
+            paragraphs_vector.append(vector_normalized)
     log.info('Normalized. Vectors: {}'.format(len(paragraphs_vector)))
 
     log.info('Reshaping...')
