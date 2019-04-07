@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 import requests
 
-from src.gpt_2.src.interactive_conditional_samples import generateSample
+from src.gpt_2.src.interactive_conditional_samples import generate_sample
 from src.gpt_2.src.check_if_correct import getNounImage
 from src.scripts.generate import generate_paragraphs
 
@@ -44,7 +44,7 @@ def generate():
     input_text = request.args.get('inputText')
     paragraphs = generate_paragraphs(input_text)
     for idx, p in enumerate(paragraphs):
-        generated_text = generateSample(input_text)
+        generated_text = generate_sample(input_text)
         paragraphs[idx].append(generated_text)
 
     result = ''

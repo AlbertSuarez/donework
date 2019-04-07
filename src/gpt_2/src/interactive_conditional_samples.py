@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-
 import fire
 import json
 import os
 import numpy as np
 import tensorflow as tf
-import argparse
+
+from src import *
 import src.gpt_2.src.model as model
 import src.gpt_2.src.sample as sample
 import src.gpt_2.src.encoder as encoder
@@ -14,36 +14,8 @@ import src.gpt_2.src.encoder as encoder
 generatedText = ""
 inputText = ""
 
-def interact_model(
-    model_name='117M',
-    seed=None,
-    nsamples=1,
-    batch_size=1,
-    length=None,
-    temperature=0.85,
-    top_k=100,
-):
-    #TODO: borrar aquesta descripcció
-    """
-    Interactively run the model
-    :model_name=117M : String, which model to use
-    :seed=None : Integer seed for random number generators, fix seed to reproduce
-     results
-    :nsamples=1 : Number of samples to return total
-    :batch_size=1 : Number of batches (only affects speed/memory).  Must divide nsamples.
-    :length=None : Number of tokens in generated text, if None (default), is
-     determined by model hyperparameters
-    :temperature=1 : Float value controlling randomness in boltzmann
-     distribution. Lower temperature results in less random completions. As the
-     temperature approaches zero, the model will become deterministic and
-     repetitive. Higher temperature results in more random completions.
-    :top_k=0 : Integer value controlling diversity. 1 means only 1 word is
-     considered for each step (token), resulting in deterministic completions,
-     while 40 means 40 words are considered at each step. 0 (default) is a
-     special setting meaning no restrictions. 40 generally is a good value.
-    """
-    # args = parser.parse_args()
-  
+
+def interact_model(model_name='117M', seed=None, nsamples=1, batch_size=1, length=None, temperature=0.85, top_k=100):
     global generatedText
     global inputText
 
@@ -53,7 +25,7 @@ def interact_model(
 
     enc = encoder.get_encoder(model_name)
     hparams = model.default_hparams()
-    with open(os.path.join('src/gpt_2/models', model_name, 'hparams.json')) as f:
+    with open(os.path.join(MODEL_PATH, model_name, 'hparams.json')) as f:
         hparams.override_from_dict(json.load(f))
 
     if length is None:
@@ -74,11 +46,9 @@ def interact_model(
         )
 
         saver = tf.train.Saver()
-        ckpt = tf.train.latest_checkpoint(os.path.join('src/gpt_2/models', model_name))
+        ckpt = tf.train.latest_checkpoint(os.path.join(MODEL_PATH, model_name))
         saver.restore(sess, ckpt)
 
-        #TODO: afegir un botó per a executar lo de sota 
-        #TODO: si va molt mal intentar buscar el numero de paraules en el text generat envers al paragraf donat
         raw_text = inputText
         context_tokens = enc.encode(raw_text)
         generated = 0
@@ -89,20 +59,15 @@ def interact_model(
             for i in range(batch_size):
                 generated += 1
                 text = enc.decode(out[i])
-                print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
-                print("------------------------------"*30)
-                text = text.split("<|endoftext|>",1)[0]
+                text = text.split("<|endoftext|>", 1)[0]
                 generatedText += text
-                #TODO tornar la merda que fa
-                print(text)
-        print("=" * 80)
 
 
 if __name__ == '__main__':
     fire.Fire(interact_model)
 
 
-def generateSample(input_text):
+def generate_sample(input_text):
     global generatedText
     global inputText
     inputText = input_text

@@ -5,6 +5,7 @@ CSV_FILE_NAME = 'articles.csv'
 W2V_FILE_NAME = 'articles2vector.w2v'
 
 OUTPUT_PATH = '/srv/data'
+MODEL_PATH = '/srv/data/models'
 
 NEIGHBOURHOOD_AMOUNT = 5
 NUM_FEATURES = 50
@@ -21,6 +22,7 @@ __all__ = [
     'CSV_FILE_NAME',
     'W2V_FILE_NAME',
     'OUTPUT_PATH',
+    'MODEL_PATH',
     'NEIGHBOURHOOD_AMOUNT',
     'NUM_FEATURES',
     'MIN_WORD_COUNT',
