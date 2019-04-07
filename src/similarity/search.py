@@ -4,20 +4,6 @@ from src import *
 from src.donework import paragraphs, nmslib_index
 from src.util import log
 from src.similarity.util import helper
-from src.similarity.util.nmslib import Nmslib
-
-
-def _load_index():
-    index_path = os.path.join(OUTPUT_PATH, INDEX_FILE_NAME)
-    index = Nmslib()
-    index.load(index_path)
-    return index
-
-
-def _load_csv():
-    csv_path = os.path.join(OUTPUT_PATH, CSV_FILE_NAME)
-    paragraphs = helper.load_csv(csv_path)
-    return paragraphs
 
 
 def _extract_features(title, description):
@@ -32,7 +18,7 @@ def _extract_features(title, description):
     return x
 
 
-def _search(index, features, paragraphs):
+def _search(index, features):
     results = index.batch_query(features, NEIGHBOURHOOD_AMOUNT)
     closest, distances = results[0]
 
@@ -53,7 +39,7 @@ def search(title, description):
     log.info('Features extracted.')
 
     log.info('Searching...')
-    duplicate_text = _search(nmslib_index, features, paragraphs)
+    duplicate_text = _search(nmslib_index, features)
     log.info('Done! {}'.format(duplicate_text))
 
     return duplicate_text

@@ -1,4 +1,4 @@
-from src.donework import flask_app
+from src.donework import flask_app, paragraphs, nmslib_index
 
 
 if __name__ == '__main__':
