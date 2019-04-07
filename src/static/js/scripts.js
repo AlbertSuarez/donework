@@ -20,9 +20,8 @@ function generateText() {
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
       console.log('Text generated!');
-      var generatedText = xhr.responseText;
-      generatedText = generatedText.substring(2);
-      generatedText = generatedText.substring(0,generatedText.length-3);
+      var json = JSON.parse(xhr.responseText)
+      var generatedText = json.text;
       textInput.value = text + generatedText;
       run();
     } else {
@@ -38,6 +37,24 @@ function generateText() {
   xhr.send();
 }
 
+function openlink(link){
+  window.open(link);
+}
+
+function download(){
+  var textInput = document.getElementById('textInput');
+  var text = textInput.value;
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){
+    if (xhr.status >= 200 && xhr.status < 300){
+      var link = xhr.responseText;
+      console.log(link)
+      openlink(link);
+    };
+    xhr.open('GET', 'http://0.0.0.0:6969/download?inputText='+text)
+    xhr.send();
+  }
+}
 
 function generateImage() {
   textInput = document.getElementById('textInput');

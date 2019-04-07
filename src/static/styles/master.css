@@ -159,7 +159,7 @@ body {
 
 .content-text {
   width: 80%;
-
+  outline:none;
   color:  #0F407A;
 
   padding: 3em;
