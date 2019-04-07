@@ -99,15 +99,21 @@ html, body{
   margin-left: 2em;
   padding: 1em;
   border-radius: 5px;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  margin-top: 2em;
+  padding: 1em;
+  display: flex;
 }
 
 .generate .content .question p {
-  text-align: center;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 14px;
   color: black;
   letter-spacing: 3px;
+  text-align: right;
+  padding-right: 5px;
+  margin-bottom: 0;
+  margin-right: 0.5em;
 }
 
 /** PREVIEW **/
@@ -284,8 +290,9 @@ footer {
 
 .slidecontainer {
   width: 100%; /* Width of the outside container */
-  padding-top: 0.5em;
-  margin-bottom: 1em;
+  padding-top: 0.25em;
+  max-width: 200px;
+  float: right;
 }
 
 /* The slider itself */
@@ -300,6 +307,7 @@ footer {
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
   transition: opacity .2s;
   border-radius: 20px;
+
 }
 
 /* Mouse-over effects */
