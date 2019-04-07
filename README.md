@@ -1,3 +1,9 @@
+<br>
+<p align="center">
+  <img alt="Donework" src="donework.png" width="50%"/>
+</p>
+<br>
+
 # Donework
 
 [![HitCount](http://hits.dwyl.io/AlbertSuarez/donework.svg)](http://hits.dwyl.io/AlbertSuarez/donework)
