@@ -1,16 +1,23 @@
 
 
 function run() {
-  var text = document.getElementById('textInput').value,
-      target = document.getElementById('targetDiv'),
-      converter = new showdown.Converter(),
-      html = converter.makeHtml(text);
-    target.innerHTML = html;
+  var text = document.getElementById('textInput').value;
+  var target = document.getElementById('targetDiv');
+
+  converter = new showdown.Converter(),
+  html = converter.makeHtml(text);
+  target.innerHTML = html;
 }
 
 function generateText() {
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
+
+    // Put slider
+    document.getElementById("waiting-div").style.display = "inline-block";
+    document.getElementById("textInput").style.display  = "none";
+
+
   // Set up our HTTP request
   var xhr = new XMLHttpRequest();
 
@@ -20,9 +27,12 @@ function generateText() {
     if (xhr.status >= 200 && xhr.status < 300) {
       // What do when the request is successful
       console.log('Text generated!');
+
       var json = JSON.parse(xhr.responseText)
       var generatedText = json.text;
       textInput.value = text + generatedText;
+      document.getElementById("textInput").style.display  = "inline-block";
+      document.getElementById("waiting-div").style.display = "none";
       run();
     } else {
       // What do when the request fails
@@ -89,6 +99,11 @@ function generateImage() {
 
 
 function make_preview(el) {
+
+  // Esconder texto
+
+  //Poner slider
+
 
   run();
   autoScrollTo(el);
