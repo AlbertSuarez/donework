@@ -68,4 +68,4 @@ def downloadLink():
         f.write(input_text)
     subprocess.check_output(['pandoc', '-o', os.path.join(OUTPUT_PATH, 'inputFile.html'), os.path.join(OUTPUT_PATH, 'inputFile.md')])
     subprocess.check_output(['pandoc', '-o', 'src/static/x/output.pdf', os.path.join(OUTPUT_PATH, 'inputFile.html')])
-    return jsonify({'path': 'http://35.187.2.140:6969/static/x/output.pdf'})
+    return jsonify({'path': 'http://35.187.2.140:8080/static/x/output.pdf'})
