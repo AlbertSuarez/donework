@@ -11,7 +11,7 @@ function generateText() {
   var textInput = document.getElementById('textInput');
   var text = textInput.value;
   var temperature_div = document.getElementById('range_temperature');
-  var temperature = temperature_div.value;
+  var rand = temperature_div.value;
 
     // Put slider
     document.getElementById("waiting-div").style.display = "inline-block";
@@ -45,7 +45,7 @@ function generateText() {
   // The second argument is the endpoint URL
   xhr.open('POST', 'http://35.187.2.140:8080/generate');
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhr.send(JSON.stringify({ "text": text }));
+  xhr.send(JSON.stringify({ "text": text , "rand": rand}));
   xhr.send();
 }
 

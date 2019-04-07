@@ -49,10 +49,11 @@ def image():
 def generate():
     body_request = request.json
     input_text = body_request['text']
+    rand = body_request['rand']
     paragraphs = generate_paragraphs(input_text)
     for idx, p in enumerate(paragraphs):
         sample_idx = 1 if len(p) == 2 else 2
-        generated_text = generate_sample(p[sample_idx])
+        generated_text = generate_sample(p[sample_idx],rand)
         paragraphs[idx].append(generated_text)
 
     result = ''

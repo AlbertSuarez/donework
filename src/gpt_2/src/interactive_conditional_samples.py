@@ -13,6 +13,7 @@ import src.gpt_2.src.encoder as encoder
 
 generatedText = ""
 inputText = ""
+randomness = 85
 
 
 def interact_model(model_name='117M', seed=None, nsamples=1, batch_size=1, length=None, temperature=0.85, top_k=100):
@@ -37,12 +38,13 @@ def interact_model(model_name='117M', seed=None, nsamples=1, batch_size=1, lengt
         context = tf.placeholder(tf.int32, [batch_size, None])
         np.random.seed(seed)
         tf.set_random_seed(seed)
+        global randomness
         output = sample.sample_sequence(
             hparams=hparams, 
             length=length,
             context=context,
             batch_size=batch_size,
-            temperature=temperature, top_k=top_k
+            temperature=randomness/100, top_k=100-randomness+1
         )
 
         saver = tf.train.Saver()
@@ -67,9 +69,11 @@ if __name__ == '__main__':
     fire.Fire(interact_model)
 
 
-def generate_sample(input_text):
+def generate_sample(input_text, rand):
     global generatedText
     global inputText
+    global randomness
+    randomness = rand
     inputText = input_text
     generatedText = ""
     fire.Fire(interact_model)
