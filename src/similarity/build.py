@@ -31,7 +31,7 @@ def _build():
     paragraphs_vector = []
     for row in tqdm(rows, total=len(rows)):
         vector_normalized = helper.normalize((row, paragraphs2vec))
-        if vector_normalized:
+        if vector_normalized is not None:
             paragraphs_vector.append(vector_normalized)
     log.info('Normalized. Vectors: {}'.format(len(paragraphs_vector)))
 
